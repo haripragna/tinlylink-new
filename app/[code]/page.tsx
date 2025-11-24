@@ -1,8 +1,15 @@
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
-export default async function RedirectPage(props: any) {
-  const code = props?.params?.code;
+// Correct type for dynamic route params in Next.js 15
+interface PageProps {
+  params: {
+    code: string;
+  };
+}
+
+export default async function RedirectPage({ params }: PageProps) {
+  const { code } = params;
 
   if (!code) {
     return <h1>Invalid link</h1>;
@@ -16,6 +23,7 @@ export default async function RedirectPage(props: any) {
     return <h1>Short link not found</h1>;
   }
 
+  // Increase click count
   await prisma.link.update({
     where: { code },
     data: {
@@ -26,5 +34,6 @@ export default async function RedirectPage(props: any) {
 
   redirect(link.url);
 }
+
 
 
