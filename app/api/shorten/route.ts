@@ -8,7 +8,7 @@ export async function POST(req: Request) {
       return Response.json({ error: "URL required" }, { status: 400 });
     }
 
-    const code = Math.random().toString(36).substring(2, 8);
+    const code = Math.random().toString(36).slice(2, 8);
 
     const link = await prisma.link.create({
       data: { url, code },

@@ -3,16 +3,20 @@
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
-export default async function RedirectPage({ params }: any) {
-  const code = params?.code;
+export default async function Page({ params }: { params: { code: string } }) {
+  const code = params.code;
 
-  if (!code) return <h1>Invalid link</h1>;
+  if (!code) {
+    return <h1>Invalid link</h1>;
+  }
 
   const link = await prisma.link.findUnique({
     where: { code },
   });
 
-  if (!link) return <h1>Short link not found</h1>;
+  if (!link) {
+    return <h1>Short link not found</h1>;
+  }
 
   await prisma.link.update({
     where: { code },
@@ -24,6 +28,7 @@ export default async function RedirectPage({ params }: any) {
 
   redirect(link.url);
 }
+
 
 
 
