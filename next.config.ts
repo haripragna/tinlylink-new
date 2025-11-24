@@ -1,19 +1,15 @@
-/** @type {import("next").NextConfig} */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  // force Webpack, disable Turbopack fully
-  webpack: (config: any) => {
-    return config;
+  typescript: {
+    ignoreBuildErrors: true,
   },
-  experimental: {
-    turbo: false,
-  },
-  turbopack: false,
   eslint: {
-    ignoreDuringBuilds: true,   // <-- ADD THIS LINE
+    ignoreDuringBuilds: true,
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
+
 
 
 

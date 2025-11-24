@@ -1,14 +1,12 @@
-import { prisma} from "@/lib/prisma";
+import {prisma} from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
-type Props = {
-  params: {
-    code: string;
-  };
-};
-
-export default async function Page({ params }: Props) {
-  const code = params.code;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ code: string }>;
+}) {
+  const { code } = await params;
 
   const link = await prisma.link.findUnique({
     where: { code },
