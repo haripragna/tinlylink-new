@@ -17,10 +17,13 @@ export async function POST(req: Request) {
     return Response.json({
       shortUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/${link.code}`,
     });
-  } catch (error) {
-    console.error("API ERROR:", error);
-    return Response.json({ error: "Server error" }, { status: 500 });
-  }
+  } catch (error: any) {
+  return Response.json(
+    { error: String(error.message || error) },
+    { status: 500 }
+  );
+}
+
 }
 
 
