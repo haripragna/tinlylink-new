@@ -1,8 +1,10 @@
-export const runtime = "nodejs";
+export const runtime = "nodejs"; // ⭐ MUST BE FIRST LINE
+export const dynamic = "force-dynamic"; // ⭐ Prevents static rendering
+
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
-export default async function Page({ params }: any) {
+export default async function Page({ params }: { params: { code: string } }) {
   const code = params.code;
 
   const link = await prisma.link.findUnique({
@@ -23,6 +25,3 @@ export default async function Page({ params }: any) {
 
   redirect(link.url);
 }
-
-
-
