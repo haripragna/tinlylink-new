@@ -1,37 +1,32 @@
-export const runtime = "nodejs";
+// ⭐ MUST disable every type of prerendering
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
+export const runtime = "nodejs";
 
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
 export default async function Page({ params }: { params: { code: string } }) {
-  try {
-    const code = params.code;
+  const code = params.code;
 
-    const link = await prisma.link.findUnique({
-      where: { code },
-    });
+  const link = await prisma.link.findUnique({
+    where: { code },
+  });
 
-    if (!link) {
-      return <h1>Short link not found</h1>;
-    }
-
-    await prisma.link.update({
-      where: { code },
-      data: {
-        clicks: { increment: 1 },
-        lastClicked: new Date(),
-      },
-    });
-
-    redirect(link.url);
-  } catch (error: any) {
-    return (
-      <pre style={{ padding: 20 }}>
-        SERVER ERROR:
-        {JSON.stringify(String(error.message || error), null, 2)}
-      </pre>
-    );
+  if (!link) {
+    return <h1>Short link not found</h1>;
   }
+
+  await prisma.link.update({
+    where: { code },
+    data: {
+      clicks: { increment: 1 },
+      lastClicked: new Date(),
+    },
+  });
+
+  redirect(link.url);
 }
+
 
