@@ -1,11 +1,17 @@
-import { prisma } from "@/lib/prisma";
-
+import { prisma} from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
-export default async function RedirectPage({ params }: { params: { code: string } }) {
+type Props = {
+  params: {
+    code: string;
+  };
+};
+
+export default async function Page({ params }: Props) {
+  const code = params.code;
 
   const link = await prisma.link.findUnique({
-    where: { code: params.code },
+    where: { code },
   });
 
   if (!link) {
@@ -13,7 +19,7 @@ export default async function RedirectPage({ params }: { params: { code: string 
   }
 
   await prisma.link.update({
-    where: { code: params.code },
+    where: { code },
     data: {
       clicks: { increment: 1 },
       lastClicked: new Date(),
@@ -22,3 +28,4 @@ export default async function RedirectPage({ params }: { params: { code: string 
 
   redirect(link.url);
 }
+
