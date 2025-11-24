@@ -1,0 +1,6 @@
+{
+  "functions": {
+    "app/**/*.js": { "runtime": "nodejs18.x" },
+    "app/**/*.ts": { "runtime": "nodejs18.x" }
+  }
+}
