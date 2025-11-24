@@ -1,13 +1,17 @@
-"use server";  // ADD THIS LINE
+"use server";
 
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
-export default async function Page({ params }: { params: { code: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: { code: string };
+}) {
   const code = params.code;
 
   if (!code) {
-    return <h1>Invalid link</h1>;
+    return <h1>Invalid Link</h1>;
   }
 
   const link = await prisma.link.findUnique({
@@ -28,6 +32,8 @@ export default async function Page({ params }: { params: { code: string } }) {
 
   redirect(link.url);
 }
+
+   
 
 
 
