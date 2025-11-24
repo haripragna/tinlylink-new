@@ -18,7 +18,10 @@ export async function POST(req: Request) {
       shortUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/${link.code}`,
     });
   } catch (error) {
-    console.error(error);
+    console.error("API ERROR:", error);
     return Response.json({ error: "Server error" }, { status: 500 });
   }
 }
+
+
+

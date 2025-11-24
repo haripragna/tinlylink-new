@@ -1,8 +1,10 @@
+"use server";  // ADD THIS LINE
+
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
-export default async function RedirectPage({ params }: { params: { code: string } }) {
-  const code = params.code;
+export default async function RedirectPage({ params }: any) {
+  const code = params?.code;
 
   if (!code) return <h1>Invalid link</h1>;
 
@@ -22,6 +24,8 @@ export default async function RedirectPage({ params }: { params: { code: string 
 
   redirect(link.url);
 }
+
+
 
 
 
